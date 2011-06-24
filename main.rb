@@ -38,11 +38,8 @@ post '/register' do
   @user = User.register params[:username], params[:password]
   redirect '/register' unless @user
   if User.all.length == 1
-    # Add default language
     lang = Lang.create(:id=>'en_GB',:name=>'English')
-    # Add default page
-    lang.pages.new(:label=>'home',:title=>'Hello!',:content=>'Congratulations on installing BlackJax!',:pos=>0)
-    lang.save
+    lang.pages.create(:label=>'home',:title=>'Hello!',:content=>'Congratulations on installing BlackJax!',:pos=>0)
   end
   haml :"blackjax/registered", :layout => :"blackjax/layout"
 end
