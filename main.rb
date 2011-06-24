@@ -38,7 +38,7 @@ post '/register' do
   redirect '/register' unless @user
   # Add default language
   # Add default page
-  haml :"blackjax/registered"
+  haml :"blackjax/registered", :layout => :"blackjax/layout"
 end
 
 get '/page/:page' do

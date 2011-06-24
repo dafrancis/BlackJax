@@ -11,7 +11,7 @@ class User
     user = self.new
     user.username = username
     user.pass_hash = user.hash_password(username, password)
-    user.save!
+    user.save! ? user : false
   end
   
   def self.login(username, password)
