@@ -3,7 +3,7 @@ class Lang
 
   property :id,      String, :length => 10, :key => true 
   property :name,    String, :length => 50
-  property :order,   Integer
+  property :pos,   Integer
   
   has n, :pages
 

@@ -6,7 +6,7 @@ class Page
   property :title,   String, :length => 30
   property :content, Text
   property :lang,    String, :length => 10
-  property :order,   Integer
+  property :pos,   Integer
   
   has 1, :lang
 

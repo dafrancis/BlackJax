@@ -3,5 +3,5 @@ class User
 
   property :id,       Serial
   property :username, String, :length => 15
-  property :hash,     Text
+  property :pass_hash,     Text
 end
