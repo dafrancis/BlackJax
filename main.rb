@@ -21,9 +21,16 @@ def panel_admin
 end
 
 get '/' do
+  redirect '/register' if User.all == []
   "BlackJax"
   panel_links
   panel_admin
+  User.all.inspect
+end
+
+get '/register' do
+  redirect '/' unless User.all == []
+  "Register"
 end
 
 get '/page/:page' do
