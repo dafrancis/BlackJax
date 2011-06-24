@@ -25,12 +25,18 @@ get '/' do
   "BlackJax"
   panel_links
   panel_admin
-  User.all.inspect
+  User.first.username
 end
 
 get '/register' do
   redirect '/' unless User.all == []
-  "Register"
+  haml :"blackjax/register", :layout => :"blackjax/layout"
+end
+
+post '/register' do
+  @user = User.register params[:username], params[:password]
+  redirect '/register' unless @user
+  haml :"blackjax/registered"
 end
 
 get '/page/:page' do
