@@ -8,12 +8,12 @@ Dir["./models/*"].each {|file| require file }
 DataMapper.finalize.auto_upgrade!
 
 def get_lang
-  session[:lang] ||= "ENGLISH"#Lang.first(:order =>[:pos.asc]) 
+  session[:lang] ||= Lang.first(:order =>[:pos.asc]).id
 end
 
 # Panels
 def panel_links
-  Page.all(:pos.not => nil, :lang => get_lang)
+  Lang.get(get_lang).pages(:order =>[:pos.asc]).map{|n| n.title}
 end
 
 def panel_admin
@@ -23,9 +23,10 @@ end
 get '/' do
   redirect '/register' if User.all == []
   "BlackJax"
-  panel_links
+  a = panel_links
+  puts panel_links
   panel_admin
-  User.first.username
+  a
 end
 
 get '/register' do
@@ -36,8 +37,13 @@ end
 post '/register' do
   @user = User.register params[:username], params[:password]
   redirect '/register' unless @user
-  # Add default language
-  # Add default page
+  if User.all.length == 1
+    # Add default language
+    lang = Lang.create(:id=>'en_GB',:name=>'English')
+    # Add default page
+    lang.pages.new(:label=>'home',:title=>'Hello!',:content=>'Congratulations on installing BlackJax!',:pos=>0)
+    lang.save
+  end
   haml :"blackjax/registered", :layout => :"blackjax/layout"
 end
 

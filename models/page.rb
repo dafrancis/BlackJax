@@ -5,10 +5,9 @@ class Page
   property :label,   String, :length => 20
   property :title,   String, :length => 30
   property :content, Text
-  property :lang,    String, :length => 10
   property :pos,   Integer
   
-  has 1, :lang
+  belongs_to :lang, :key => true
 
   validates_uniqueness_of :label
 end
