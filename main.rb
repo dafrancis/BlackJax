@@ -36,6 +36,8 @@ end
 post '/register' do
   @user = User.register params[:username], params[:password]
   redirect '/register' unless @user
+  # Add default language
+  # Add default page
   haml :"blackjax/registered"
 end
 
