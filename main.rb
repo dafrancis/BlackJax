@@ -12,21 +12,19 @@ def get_lang
 end
 
 # Panels
-def panel_links
-  Lang.get(get_lang).pages(:order =>[:pos.asc]).map{|n| n.title}
+get '/panel/links' do
+  @pages = Lang.get(get_lang).pages(:order =>[:pos.asc])
+  haml :links
 end
 
-def panel_admin
-  Dir['./modules/*.rb'].map{|n| n.gsub(/(\.\/modules\/|\.rb)/,'').capitalize}
+get '/panel/admin' do
+  @modules = Dir['./modules/*.rb'].map{|n| n.gsub(/(\.\/modules\/|\.rb)/,'')}
+  haml :modules
 end
 
 get '/' do
   redirect '/register' if User.all == []
   "BlackJax"
-  a = panel_links
-  puts panel_links
-  panel_admin
-  a
 end
 
 get '/register' do

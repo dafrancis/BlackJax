@@ -1,0 +1,4 @@
+%ul
+  -@pages.each do |page|
+    %li{:class=>page.label}
+      %a{:href=>"##{page.label}"}= page.title
