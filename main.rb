@@ -1,32 +1,22 @@
-require 'sinatra'
-require 'haml'
-require 'data_mapper'
+%w(sinatra haml data_mapper).each{|file| require file}
 
 enable :sessions
 
 helpers do
   Dir["./helpers/*.rb"].each do |file|
     require file
-    include Kernel.const_get(file.gsub(/(\.\/helpers\/|\.rb)/,'').capitalize)
+    include Kernel.const_get(file.gsub(%r{(./helpers/|.rb)},'').capitalize)
   end
 end
 
 # Models
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:data")
 Dir["./models/*"].each {|file| require file }
-DataMapper.finalize.auto_upgrade!
-
-def get_lang
-  session[:lang] ||= Lang.first(:order =>[:pos.asc]).id
-end
+DataMapper.finalize
+DataMapper.auto_upgrade!
 
 post '/auth' do
-  user = User.login(params[:u],params[:p])
-  unless user.nil?
-    session[:user] = {}
-    session[:user][:username] = user.username
-    session[:user][:pass_hash] = user.pass_hash
-  end
+  authenticate! params[:u], params[:p]
 end
 
 get '/admin' do
@@ -49,13 +39,12 @@ get '/panel/links' do
 end
 
 get '/panel/admin' do
-  @modules = Dir['./modules/*.rb'].map{|n| n.gsub(/(\.\/modules\/|\.rb)/,'')}
+  @modules = Dir['./modules/*.rb'].map{|n| n.gsub(%r{(./modules/|.rb)},'')}
   haml :modules
 end
 
 get '/' do
   redirect '/register' if User.all == []
-  "BlackJax"
   erb :index
 end
 
@@ -67,10 +56,7 @@ end
 post '/register' do
   @user = User.register params[:username], params[:password]
   redirect '/register' unless @user
-  if User.all.length == 1
-    lang = Lang.create(:id=>'en_GB',:name=>'English')
-    lang.pages.create(:label=>'home',:title=>'Hello!',:content=>'Congratulations on installing BlackJax!',:pos=>0)
-  end
+  create_blank!
   haml :"blackjax/registered", :layout => :"blackjax/layout"
 end
 
