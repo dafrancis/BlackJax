@@ -1,8 +1,12 @@
-%ul
-  -if is_authenticated?
-    -@modules.each do |mod|
-      %li
-        %a{:href=>"##{mod}"}= mod.capitalize
-  -else
+-if is_authenticated?
+  -@modules.each do |mod|
     %li
-      %a{:href=>"#login"} Login
+      %a{:href=>"##{mod}"}= mod.capitalize
+-else
+  %li
+    %a#loginlink{:href=>''} Login
+    <script>
+    $("#loginlink").click(function(e){
+    e.preventDefault();
+    $("#loginlinkdialog").dialog("open");
+    });</script>

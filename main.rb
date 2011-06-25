@@ -13,7 +13,10 @@ def get_lang
   session[:lang] ||= Lang.first(:order =>[:pos.asc]).id
 end
 
-#require './lib/auth.rb'
+get '/admin' do
+  response.set_cookie("admin", 1)
+  redirect '/'
+end
 
 # Panels
 get '/panel/links' do
@@ -48,7 +51,8 @@ post '/register' do
 end
 
 get '/page/:page' do
-  Page.first(:label => params[:page]).content
+  page = Page.first(:label => params[:page])
+  page.nil? ? "Error 404" : page.content
 end
 
 Dir["./helpers/*.rb"].each{|file| require file}

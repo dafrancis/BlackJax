@@ -47,7 +47,7 @@ $(function(){
 			"Ok": function() {
 				$.ajax({
 					type: 'POST',
-					url: 'auth.php',
+					url: '/auth',
 					data: 'u='+escape($("#username").attr("value"))+'&p='+escape($("#password").attr("value")),
 					success: function(){
 						load_links();
@@ -78,7 +78,7 @@ function load_links(){
 					success: function(text){
 						$('#links li').removeClass('active');
 						$('#box').html(text).show("slow");
-						$('title').html("Something Afal - "+lin.children(0).html());
+						$('title').html("Something Afal - "+$('.'+page).children(0).html());
 						$('#links li.'+page).addClass('active');
 						load_panel();
 					}
@@ -142,7 +142,7 @@ function load_home(){
 				success: function(text){
 					$('#links li').removeClass('active');
 					$('#box').html(text).show("slow");
-					$('title').html("Something Afal - "+lin.html());
+					$('title').html("Something Afal - "+$('.'+page).children(0).html());
 					$('#links li.'+page).addClass('active');
 					load_panel();
 				}
@@ -151,4 +151,3 @@ function load_home(){
 		load_panel();
 	}
 }
-
