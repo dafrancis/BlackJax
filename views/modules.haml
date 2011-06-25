@@ -1,4 +1,8 @@
 %ul
-  -@modules.each do |mod|
+  -if is_authenticated?
+    -@modules.each do |mod|
+      %li
+        %a{:href=>"##{mod}"}= mod.capitalize
+  -else
     %li
-      %a{:href=>"##{mod}"}= mod.capitalize
+      %a{:href=>"#login"} Login

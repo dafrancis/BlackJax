@@ -2,6 +2,8 @@ require 'sinatra'
 require 'haml'
 require 'data_mapper'
 
+enable :sessions
+
 # Models
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:data")
 Dir["./models/*"].each {|file| require file }
@@ -10,6 +12,8 @@ DataMapper.finalize.auto_upgrade!
 def get_lang
   session[:lang] ||= Lang.first(:order =>[:pos.asc]).id
 end
+
+#require './lib/auth.rb'
 
 # Panels
 get '/panel/links' do
@@ -25,6 +29,7 @@ end
 get '/' do
   redirect '/register' if User.all == []
   "BlackJax"
+  erb :index
 end
 
 get '/register' do
@@ -44,4 +49,9 @@ end
 
 get '/page/:page' do
   Page.first(:label => params[:page]).content
+end
+
+Dir["./helpers/*.rb"].each{|file| require file}
+helpers do
+  include Auth
 end
