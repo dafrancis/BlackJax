@@ -4,6 +4,11 @@ require 'data_mapper'
 
 enable :sessions
 
+Dir["./helpers/*.rb"].each{|file| require file}
+helpers do
+  include Auth
+end
+
 # Models
 DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:data")
 Dir["./models/*"].each {|file| require file }
@@ -11,6 +16,15 @@ DataMapper.finalize.auto_upgrade!
 
 def get_lang
   session[:lang] ||= Lang.first(:order =>[:pos.asc]).id
+end
+
+post '/auth' do
+  user = User.login(params[:u],params[:p])
+  unless user.nil?
+    session[:user] = {}
+    session[:user][:username] = user.username
+    session[:user][:pass_hash] = user.pass_hash
+  end
 end
 
 get '/admin' do
@@ -53,9 +67,4 @@ end
 get '/page/:page' do
   page = Page.first(:label => params[:page])
   page.nil? ? "Error 404" : page.content
-end
-
-Dir["./helpers/*.rb"].each{|file| require file}
-helpers do
-  include Auth
 end
