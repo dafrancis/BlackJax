@@ -5,3 +5,8 @@
   %li
     %b
       %span#addpage +
+      <script>
+      $("#addpage").click(function(e){
+			e.preventDefault();
+			$("#addpage_dialog").dialog("open");
+		  });</script>

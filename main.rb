@@ -4,9 +4,11 @@ require 'data_mapper'
 
 enable :sessions
 
-Dir["./helpers/*.rb"].each{|file| require file}
 helpers do
-  include Auth
+  Dir["./helpers/*.rb"].each do |file|
+    require file
+    include Kernel.const_get(file.gsub(/(\.\/helpers\/|\.rb)/,'').capitalize)
+  end
 end
 
 # Models
@@ -30,6 +32,14 @@ end
 get '/admin' do
   response.set_cookie("admin", 1)
   redirect '/'
+end
+
+post '/admin/:page/:module' do
+  "Not Logged in" unless is_authenticated?
+	#include_once "lib/module.php";
+	require "./modules/#{params[:module]}.rb";
+  mod = Kernel.const_get(params[:module].capitalize).new
+  mod.run session, params
 end
 
 # Panels

@@ -25,8 +25,8 @@ $(function(){
 				page = $("#pagelabel").attr("value");
 				$.ajax({
 					type: 'POST',
-					url: 'admin.php',
-					data: 'action=edit&page='+escape(page)+'&add='+escape(page),
+					url: '/admin/'+escape(page)+'/edit',
+					data: 'add='+escape(page),
 					success: function(text){
 						$('#box').html(text).show("slow");
 						$('#panel').hide();
@@ -99,8 +99,8 @@ function load_panel(){
 			$('#box').hide("slow", function(){
 				$.ajax({
 					type: 'POST',
-					url: 'admin.php',
-					data: 'action='+escape(action)+'&page='+escape(page),
+					url: '/admin/'+escape(page)+'/'+escape(action),
+					data: '',
 					success: function(text){
 						$('#box').html(text).show("slow");
 						$('#panel').hide();
