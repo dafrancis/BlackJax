@@ -1,7 +1,7 @@
 class Edit
   def run(session,params)
     add = params[:add]
-    Page.create(:label => add) if add
+    Lang.get('nolang').pages.create(:label => add) if add
     page = Page.first(:label=>params[:page])
     return save(page,params[:text],params[:title]) if params[:text] and params[:title]
     <<-eos
