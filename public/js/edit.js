@@ -23,14 +23,14 @@ function edit(page){
 	location.hash = '#'+page;
 	$.ajax({
 		type: 'POST',
-		url: 'admin.php',
-		data: 'action=edit&page='+escape(page)+'&text='+escape(tinyMCE.get('editbox').getContent())+'&title='+escape($('#edittitle').attr('value')),
+		url: '/admin/'+escape(page)+'/edit',
+		data: 'text='+escape(tinyMCE.get('editbox').getContent())+'&title='+escape($('#edittitle').attr('value')),
 		success: function(){
 			$('#box').hide("slow", function(){
 				$.ajax({
-					type: 'POST',
-					url: 'page.php',
-					data: 'p='+escape(page),
+					type: 'GET',
+					url: '/page/'+escape(page),
+					data: '',
 					success: function(text){
 						$('#links li').removeClass('active');
 						$('#box').html(text).show("slow");
