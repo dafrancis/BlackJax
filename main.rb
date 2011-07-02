@@ -1,21 +1,11 @@
-%w(sinatra/base haml data_mapper).each{|file| require file}
+require 'sinatra/base'
+require 'haml'
 
 class BlackJax < Sinatra::Base
-  enable :sessions
+  require './lib/helpers.rb'
+  require './lib/models.rb'
   
-  # Helpers
-  helpers do
-    Dir["./helpers/*.rb"].each do |file|
-      require file
-      include Kernel.const_get(file.gsub(%r{(./helpers/|.rb)},'').capitalize)
-    end
-  end
-
-  # Models
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:data")
-  Dir["./models/*"].each {|file| require file }
-  DataMapper.finalize
-  DataMapper.auto_upgrade!
+  enable :sessions
 
   post '/auth' do
     authenticate! params[:u], params[:p]
