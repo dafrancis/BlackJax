@@ -9,8 +9,8 @@
 			$('#box').hide("slow", function(){
 				$.ajax({
 					type: 'POST',
-					url: 'page.php',
-					data: 'p='+escape(page),
+					url: '/page/'+escape(page),
+					data: '',
 					success: function(text){
 						$('#links li').removeClass('active');
 						$('#box').html(text).show("slow");
@@ -24,14 +24,14 @@
 	});
 
 function sort(){
-	datastring = '';
+	var datastring = '';
 	$('.droptrue').each(function(){
 		datastring += '&'+$(this).attr('id')+'='+escape($(this).sortable("toArray")+"");
 	});
 	$.ajax({
 		type: 'POST',
-		url: 'admin.php',
-		data: 'action=sort'+datastring,
+		url: '/admin/sort/sort',
+		data: datastring,
 		success: function(text){
 			$('#links li').removeClass('active');
 			load_links();
