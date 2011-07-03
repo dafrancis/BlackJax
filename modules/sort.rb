@@ -15,7 +15,6 @@ class Sort
       page.save!
     end
     Lang.all(:id.not=>'nolang').each do |lang|
-      puts "it gets here"
       params[lang.id].split(',').each_with_index do |label,pos|
         page = Page.first(:label=>label)
         page.lang_id = lang.id

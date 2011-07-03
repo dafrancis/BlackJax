@@ -2,20 +2,22 @@ class Language
   include Renderer
   
   def run(session,params)
-    puts params[:id]
-    puts params[:language]
-    Lang.get(params[:delete]).destroy if params[:delete]
-    add! params[:id], params[:language] if params[:id] and params[:langauge]
-    sort! params[:sort] if params[:sort]    
-		langs = Lang.all(:id.not=>'nolang')
-		haml_render("views/modules/language.haml", :langs=>langs)
+    delete! params[:delete] if params[:delete]
+    add! params[:id], params[:language] unless add_blank? params
+    sort! params[:sort] if params[:sort]
+		haml_render("views/modules/language.haml", :langs => Lang.all(:id.not=>'nolang',:order=>[:pos.asc]))
   end
   
-  def add! (id, language)
-    lang Lang.new
-    lang.id = id
-    lang.name = language
-    lang.save!
+  def add_blank?(params)
+    !(params[:id].nil? or params[:langauge].nil?)
+  end
+  
+  def delete!(lang)
+    Lang.get(lang).destroy
+  end
+  
+  def add!(id, language)
+    Lang.create(:id=>id,:name=>language)
   end
   
   def sort!(params)

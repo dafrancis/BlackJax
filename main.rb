@@ -28,7 +28,7 @@ class BlackJax < Sinatra::Base
   end
 
   post '/admin/:page/:module' do
-    "Not Logged in" unless is_authenticated?
+    return "Not Logged in" unless is_authenticated?
     require "./modules/#{params[:module]}.rb";
     mod = Kernel.const_get(params[:module].capitalize).new
     mod.run session, params
