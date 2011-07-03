@@ -5,7 +5,7 @@ module Util
   
   def create_blank!
     if User.all.length == 1
-      lang = Lang.create(:id=>'nolang')
+      lang = Lang.create(:id=>'nolang',:name=>'Pages which aren\'t displayed',:pos=>9999999)
       lang = Lang.create(:id=>'en_GB',:name=>'English')
       lang.pages.create(:label=>'home',:title=>'Hello!',:content=>'Congratulations on installing BlackJax!',:pos=>0)
     end

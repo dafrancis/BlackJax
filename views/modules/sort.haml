@@ -1,0 +1,21 @@
+-breaker = 0
+-langs.each do |lang|
+  .sortbox
+    %h3= lang.name
+    %ul{:id=>lang.id,:class=>'droptrue'}
+      -pages = lang.pages.all(:order=>[:pos.asc])
+      -pages.each do |page|
+        %li{:class=>'ui-state-default',:id=>page.label}
+          = page.label
+          %a{:href=>"##{page.label}",:class=>'sort'} [GO]
+    -if (breaker%2)
+      %br{:clear=>'both'}
+    -breaker +=1
+%br{:clear=>'both'}
+%style{:type=>'text/css'}
+  :plain
+    .sort_box{float: left;}
+    .droptrue{ list-style-type: none; margin: 0; padding: 0; margin-right: 10px; background: #eee; padding: 5px; width: 143px;}
+    .droptrue li{ margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+%script{:type=>"text/javascript",:src=>"/js/sort.js"}
+%input{:type=>'button',:onclick=>'sort()',:value=>'Sort'}
