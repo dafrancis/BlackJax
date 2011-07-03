@@ -42,3 +42,4 @@ function edit(page){
 		}
 	},$('#box'));
 }
+tinyMCE.execCommand('mceAddControl', true, 'editbox');

@@ -1,0 +1,9 @@
+%form{:onsubmit=>"edit('#{page.label}'); return false;"}
+  %strong Title:
+  %input{:type=>'text',:id=>'edittitle',:value=>page.title}
+  %br
+  %strong Content:
+  %textarea{:id=>'editbox',:class=>'tinymce',:cols=>'50',:rows=>'15'}= page.content
+  %input{:type=>'submit',:value=>'save'}
+%script{:type=>'text/javascript',:src=>'js/tiny_mce/jquery.tinymce.js'}
+%script{:type=>'text/javascript',:src=>'js/edit.js'}
