@@ -1,0 +1,3 @@
+%select{:name=>'webmenu',:id=>'lang_drop'}
+  -@langs.each do |lang|
+    %option{:value=>lang.id,:title=>"flags/#{lang.id}.png",:selected=>(session[:lang]==lang.id)}= lang.name

@@ -66,4 +66,13 @@ class BlackJax < Sinatra::Base
     page = Page.first(:label => params[:page])
     page.nil? ? "Error 404" : page.content
   end
+  
+  get '/lang' do
+    @langs = Lang.all(:id.not=>'nolang',:order=>[:pos.asc])
+    haml :"blackjax/lang"
+  end
+  
+  post '/lang' do
+    session[:lang] = params[:lang]
+  end
 end

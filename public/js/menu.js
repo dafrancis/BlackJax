@@ -112,13 +112,13 @@ function load_panel(){
 }
 
 function load_lang(){
-	$('#lang').load('lang.php',function(){
+	$('#lang').load('/lang',function(){
 		$("#lang_drop")
 		.msDropDown({style:"min-width:110px"})
 		.change(function(){
 			$.ajax({
 				type: 'POST',
-				url: 'lang.php',
+				url: '/lang',
 				data: 'lang='+escape($(this).val()),
 				success: function(text){
 					load_links();
