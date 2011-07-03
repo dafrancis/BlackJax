@@ -8,8 +8,8 @@
 			var page = $(this).attr('href').replace(/#/,"");
 			$.ajax({
 				type: 'POST',
-				url: 'admin.php',
-				data: 'action=language&delete='+escape(page),
+				url: '/admin/lang/language',
+				data: 'delete='+escape(page),
 				success: function(text){
 					lin.remove();
 					$('#box').html("Deleted Language.");
@@ -21,8 +21,8 @@
 function sort(){
 	$.ajax({
 		type: 'POST',
-		url: 'admin.php',
-		data: 'action=language&sort='+escape($("#lang_order").sortable("toArray")+""),
+		url: '/admin/lang/language',
+		data: 'sort='+escape($("#lang_order").sortable("toArray")+""),
 		success: function(text){
 			$('#links li').removeClass('active');
 			load_links();
@@ -35,8 +35,8 @@ function sort(){
 function add(){
 	$.ajax({
 		type: 'POST',
-		url: 'admin.php',
-		data: 'action=language&id='+escape($('input[name=id]').val())+'&language='+escape($('input[name=language]').val()),
+		url: '/admin/lang/language',
+		data: 'id='+escape($('input[name=id]').val())+'&language='+escape($('input[name=language]').val()),
 		success: function(text){
 			$("#lang_order").append('<li class="ui-state-default" id="'+$('input[name=id]').val()+'">'+$('input[name=id]').val()+' <a href="#'+$('input[name=id]').val()+'" class="lang">[X]</a></li>');
 			$('li.ui-state-default a.lang')
@@ -45,8 +45,8 @@ function add(){
 			var page = $(this).attr('href').replace(/#/,"");
 			$.ajax({
 				type: 'POST',
-				url: 'admin.php',
-				data: 'action=language&delete='+escape(page),
+				url: '/admin/lang/language',
+				data: 'delete='+escape(page),
 				success: function(text){
 					lin.remove();
 					$('#box').html("Deleted Language.");

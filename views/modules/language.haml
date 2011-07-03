@@ -1,0 +1,19 @@
+.sort_box
+  %h3 Languages
+  %ul#lang_order.droptrue
+    -langs.each do |lang|
+      %li{:class=>'ui-state-default',:id=>lang.id}
+        = lang.id
+        %a{:href=>"##{lang.id}",:class=>'lang'} [X]
+%br{:clear=>'both'}
+%table
+  %tr <td>ID</td><td><input type="text" name="id" /></td>
+  %tr <td>Language</td><td><input type="text" name="language" /></td>
+  %tr <td colspan="2"><input type="submit" value="Add" onclick="add()" /></td>
+%style{:type=>"text/css"}
+  :plain
+    .sort_box{float: left;}
+    #lang_order{ list-style-type: none; margin: 0; padding: 0; margin-right: 10px; background: #eee; padding: 5px; width: 143px;}
+    #lang_order li{ margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+%script{:type=>'text/javascript',:src=>'js/language.js'}
+%input{:type=>'button',:onclick=>'sort()',:value=>'Sort'}
