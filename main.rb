@@ -6,6 +6,7 @@ class BlackJax < Sinatra::Base
   require './lib/models.rb'
   
   enable :sessions
+  set :public, './public'
 
   post '/auth' do
     authenticate! params[:u], params[:p]
