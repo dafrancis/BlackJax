@@ -1,6 +1,6 @@
 # BlackJax
 
-![BlackJax Logo](public/blackjax/logo.png)
+![BlackJax Logo](https://github.com/dafrancis/BlackJax/raw/master/public/blackjax/logo.png)
 
 ## What is this?
 
