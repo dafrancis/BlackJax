@@ -78,7 +78,7 @@ function load_links(){
 					success: function(text){
 						$('#links li').removeClass('active');
 						$('#box').html(text).show("slow");
-						$('title').html("Something Afal - "+$('.'+page).children(0).html());
+						$('title').html("BlackJax - "+$('.'+page).children(0).html());
 						$('#links li.'+page).addClass('active');
 						load_panel();
 					}
@@ -142,7 +142,7 @@ function load_home(){
 				success: function(text){
 					$('#links li').removeClass('active');
 					$('#box').html(text).show("slow");
-					$('title').html("Something Afal - "+$('.'+page).children(0).html());
+					$('title').html("BlackJax - "+$('.'+page).children(0).html());
 					$('#links li.'+page).addClass('active');
 					load_panel();
 				}
