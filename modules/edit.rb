@@ -3,7 +3,7 @@ class Edit
 
   def run(session,params)
     create_if_new! params[:add]
-    page = Page.first(:label=>page)
+    page = Page.first(:label=>params[:page])
     return if save(page, params[:text], params[:title])
     haml_render("views/modules/edit.haml", :page=>page)
   end
