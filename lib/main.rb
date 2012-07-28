@@ -10,6 +10,7 @@ class MainBlackJax < BlackJax
 
   post '/auth' do
     set_user User.login(params[:u], params[:p])
+    "logged in!"
   end
 
   get '/' do
@@ -18,6 +19,6 @@ class MainBlackJax < BlackJax
   end
 
   get '/page/:page' do
-    Page.get_content(params[:page])
+    markdown Page.get_content(params[:page])
   end
 end

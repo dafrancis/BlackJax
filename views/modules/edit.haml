@@ -3,7 +3,16 @@
   %input{:type=>'text',:id=>'edittitle',:value=>page.title}
   %br
   %strong Content:
-  %textarea{:id=>'editbox',:class=>'tinymce',:cols=>'50',:rows=>'15'}= page.content
+  #epiceditor= page.content
   %input{:type=>'submit',:value=>'save'}
-%script{:type=>'text/javascript',:src=>'js/tiny_mce/jquery.tinymce.js'}
+%style
+  :plain
+    #epiceditor { 
+      height: 349px;
+      border:1px solid #000;
+      box-shadow: rgba(0, 0, 0, 0.75) 0 2px 5px;
+      border-radius: 3px;
+      margin-top: 20px;
+    }
+%script{:type=>'text/javascript',:src=>'/epiceditor/js/epiceditor.min.js'}
 %script{:type=>'text/javascript',:src=>'js/edit.js'}
