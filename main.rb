@@ -6,17 +6,12 @@ class BlackJax < Sinatra::Base
   # Load Helpers
   Dir["./helpers/*.rb"].each do |file|
     require file
-    helpers Kernel.const_get(file.gsub(%r{(./helpers/|.rb)},'').capitalize)
+    hel = file.gsub(%r{(./helpers/|.rb)},'').capitalize
+    helpers Kernel.const_get(hel)
   end
-  
-  # Load Models
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite:data")
-  Dir["./models/*"].each {|file| require file }
-  DataMapper.finalize
-  DataMapper.auto_upgrade!
 
+  Util.load_models
   enable :sessions
-  set :public, './public'
 
   post '/auth' do
     authenticate! params[:u], params[:p]
@@ -29,9 +24,7 @@ class BlackJax < Sinatra::Base
 
   post '/admin/:page/:module' do
     return "Not Logged in" unless is_authenticated?
-    require "./modules/#{params[:module]}.rb";
-    mod = Kernel.const_get(params[:module].capitalize).new
-    mod.run session, params
+    get_and_run params[:module]
   end
 
   # Panels
@@ -56,19 +49,17 @@ class BlackJax < Sinatra::Base
   end
 
   post '/register' do
-    @user = User.register params[:username], params[:password]
-    redirect '/register' unless @user
+    register!
     create_blank!
     haml :"blackjax/registered", :layout => :"blackjax/layout"
   end
 
   get '/page/:page' do
-    page = Page.first(:label => params[:page])
-    page.nil? ? "Error 404" : page.content
+    Page.get_content(params[:page])
   end
   
   get '/lang' do
-    @langs = Lang.all(:id.not=>'nolang',:order=>[:pos.asc])
+    @langs = Lang.all(:id.not=>'nolang', :order=>[:pos.asc])
     haml :"blackjax/lang"
   end
   
