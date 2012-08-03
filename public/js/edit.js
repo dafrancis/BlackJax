@@ -1,15 +1,11 @@
 function edit(page){
-	location.hash = '#'+page;
 	var data = {
 		text: editor.exportFile(),
 		title: $('#edittitle').attr('value')
 	};
 	$.post('/admin/'+escape(page)+'/edit', data, function(){
-		$.get('/page/'+escape(page), function(text){
-			$('#links li').removeClass('active');
-			$('#box').html(text);
-			load_links();
-		});
+		load_links();
+		location.hash = "#/" + page
 	});
 }
 

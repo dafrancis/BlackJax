@@ -3,81 +3,62 @@ $(function(){
 		$('#panel-div').show();
 	}
 	load_links();
-	if(location.hash!=='')
-	$.get('/page/'+escape(location.hash.replace(/#/,"")), function(text){
-		$('#box').html(text);
-		$('#links li.'+location.hash.replace(/#/,"")).addClass('active');
-		load_panel();
-	});
-	$("#addpage_dialog").dialog({
-		autoOpen: false,
-		modal:true,
-		width: 300,
-		buttons: {
-			"Ok": function() {
-				page = $("#pagelabel").attr("value");
-				$.post('/admin/'+escape(page)+'/edit', {add: page}, function(text){
-					$('#box').html(text);
-				});
-				$(this).dialog("close"); 
-			}, 
-			"Cancel": function() { 
-				$(this).dialog("close"); 
-			} 
+	$("#addpage_dialog").dialog(dialog_opts(function() {
+		var page = $("#pagelabel").val();
+		$.post('/admin/'+escape(page)+'/edit', {add: page}, function(text){
+			$('#box').html(text);
+		});
+		$(this).dialog("close"); 
+	}));
+	$("#loginlinkdialog").dialog(dialog_opts(function() {
+		var data = {
+			u: $("#username").val(),
+			p: $("#password").val()
 		}
-	});
-	$("#loginlinkdialog").dialog({
-		autoOpen: false,
-		modal:true,
-		width: 300,
-		buttons: {
-			"Ok": function() {
-				var data = {
-					u: $("#username").val(),
-					p: $("#password").val()
-				}
-				$.post('/auth', data, function() {
-					load_links();
-					load_panel();
-				});
-				$(this).dialog("close"); 
-			}, 
-			"Cancel": function() { 
-				$(this).dialog("close"); 
-			} 
-		}
-	});
+		$.post('/auth', data, function() {
+			load_links();
+			location.hash = "#/";
+		});
+		$(this).dialog("close"); 
+	}));
 });
 
-function load_links(){
-	$('#links').load('/panel/links',function(){
-		$('#links li a')
-		.click(function(){
-			var lin = $(this);
-			var page = $(this).attr('href').replace(/#/,"");
-			$.get('/page/'+escape(page), function (text) {
-				$('#links li').removeClass('active');
-				$('#box').html(text);
-				$('title').html("BlackJax - "+$('.'+page).children(0).html());
-				$('#links li.'+page).addClass('active');
-				load_panel();
-			});
-		});
-		load_home();
+function dialog_opts(func) {
+	return {
+		autoOpen: false,
+		modal:true,
+		width: 300,
+		buttons: {
+			"Ok": func, 
+			"Cancel": function() { 
+				$(this).dialog("close"); 
+			} 
+		}
+	}
+}
+
+function load_page(page) {
+	$.get('/page/' + page, function (text) {
+		$('#links li').removeClass('active');
+		$('#box').html(text);
+		$('title').html("BlackJax - " + $('.' + page).children(0).html());
+		$('#links li.' + page).addClass('active');
+		load_panel(page);
 	});
+}
+
+function load_links(){
+	$('#links').load('/panel/links');
 	load_lang();
 }
 
-function load_panel(){
+function load_panel(page){
 	$('#panel').load('/panel/admin',function(){
 		$(this).find('li a')
-		.click(function(){
-			var action = $(this).attr('href').replace(/#/,"");
-			var page = location.hash.replace(/#/,"");
-			$.post('/admin/'+escape(page)+'/'+escape(action), function(text){
-				$('#box').html(text).show(0);
-				$('#panel').show();
-			});
+		.click(function (e) {
+			e.preventDefault();
+			var action = $(this).attr('href').replace(/#/, "");
+			location.hash = "#/" + page + "/" + action;
 		});
 	});
 }
@@ -92,24 +73,26 @@ function load_lang(){
 			};
 			$.post("/lang", function(text){
 				load_links();
-				location.hash==''
-				load_home();
+				location.hash = '#/'
 			});
 		});
 	});
 }
 
-function load_home(){
-	if(location.hash==''){
-		var lin = $("#links li a span");
-		var page = $("#links li a").attr('href').replace(/#/,"");
-		$.get('/page/'+escape(page), function(text){
-			$('#links li').removeClass('active');
+var bix = Bix({
+	"/": function () {
+		location.hash = $("#links li a").attr('href');
+	},
+	"/:page": load_page,
+	"/:page/:action": function (page, action) {
+		$.post('/admin/' + page + '/' + action, function(text){
 			$('#box').html(text);
-			$('title').html("BlackJax - "+$('.'+page).children(0).html());
-			$('#links li.'+page).addClass('active');
-			load_panel();
 		});
-		load_panel();
 	}
-}
+});
+
+bix.config({
+	forceHash: true
+});
+
+bix.run();

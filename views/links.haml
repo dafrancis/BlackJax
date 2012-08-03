@@ -1,6 +1,6 @@
 -@pages.each do |page|
   %li{:class=>page.label}
-    %a{:href=>"##{page.label}"}= page.title
+    %a{:href=>"#/#{page.label}"}= page.title
 -if is_authenticated?
   %li
     %b
