@@ -5,6 +5,7 @@ require 'data_mapper'
 class BlackJax < Sinatra::Base
   set :root, File.expand_path('../../', __FILE__)
   set :app_file, __FILE__
+  set :haml, :ugly => true
 
   enable :sessions
 

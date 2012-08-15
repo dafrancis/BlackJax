@@ -15,7 +15,7 @@ class MainBlackJax < BlackJax
 
   get '/' do
     redirect '/register' if User.empty?
-    erb :index
+    erb :newindex
   end
 
   get '/page/:page' do

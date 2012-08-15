@@ -3,10 +3,9 @@
     %a{:href=>"#/#{page.label}"}= page.title
 -if is_authenticated?
   %li
-    %b
-      %span#addpage +
-      <script>
-      $("#addpage").click(function(e){
-      e.preventDefault();
-      $("#addpage_dialog").dialog("open");
-      });</script>
+    %a#addpage +
+    <script>
+    $("#addpage").click(function(e){
+    e.preventDefault();
+    $("#addpage_dialog").dialog("open");
+    });</script>

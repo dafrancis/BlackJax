@@ -48,6 +48,7 @@ function load_page(page) {
 			$('#box').html("<h2>Error 404</h2><canvas id='corgi' width='640' height='480'></canvas>");
 			corgiCanvas();
 		}
+		$('#page_title').text($('.' + page).children(0).html())
 		load_panel(page);
 	});
 }
