@@ -1,7 +1,7 @@
 class LangSwitch < BlackJax
   get '/' do
     @langs = Lang.all(:id.not=>'nolang', :order=>[:pos.asc])
-    haml :"blackjax/lang"
+    haml :"blackjax/lang", :layout => false
   end
   
   post '/' do

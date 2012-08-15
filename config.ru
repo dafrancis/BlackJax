@@ -7,6 +7,7 @@ require 'lang_switch'
 require 'panel'
 require 'renderer'
 require 'admin'
+require 'blog'
 
 map "/" do
   run MainBlackJax
@@ -26,4 +27,8 @@ end
 
 map "/admin" do
   run Admin
+end
+
+map "/blog" do
+  run Blog
 end

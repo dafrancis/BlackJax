@@ -1,0 +1,24 @@
+#articles {
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 0;
+
+}
+#articles li {
+    padding: 5px;
+    padding-left: 16px;
+}
+
+#articles li.pier { background: url(http://i.imgur.com/nqa2H.jpg?3) left center no-repeat }
+#articles li.sa { background: url(http://i.imgur.com/tUac1.png?3) left center no-repeat }
+
+pre , code, kbd, samp { 
+  color: #000; 
+  font-family: monospace; 
+  font-size: 0.98em; 
+  border-radius:3px;
+  background-color: #F8F8F8;
+  border: 1px solid #CCC; 
+}
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 5px;}
+pre code { border: 0px !important; }

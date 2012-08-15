@@ -17,13 +17,16 @@ the JavaScript a bit.
 
 ## What's new?
 
-* Started the project and released the code instead of hoarding it myself
+* Replaced TinyMCE with EpicEditor. Markdown is the new replacement for WYSIWYG.
+* Bootstrapped it and chose a decent theme from bootswatch.com
+* Modified the JavaScript *A LOT*. Should be a lot more efficient
+* Added easter eggs
+* Added a blogging system based on the "Sinatra: Up and running" book
 
 ## To-Do
 
-* Themes or Skins or Layouts or whatever is the best word for it
-* TinyMCE seems to not work half of the time so I need to have a look at that
 * Better Login
+* Remove the dependance on jqui. I know I can do it someday~
 
 ## How to use
 

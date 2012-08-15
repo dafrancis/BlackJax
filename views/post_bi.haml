@@ -1,0 +1,33 @@
+%article
+  %header
+    %h1= article.title
+    %time.timeago{:datetime => article.date.xmlschema}= article.date.strftime "%Y/%m/%d"
+  %section.content
+    #en
+      %a{:href=>"#cy"} Darllenwch hwn yn gymraeg
+      = markdown article.en
+    #cy
+      %a{:href=>"#en"} Read this in english
+      = markdown article.cy
+  %script
+    :plain
+      $(function () {
+        var date = $('time.timeago').html();
+        $('time.timeago').html(Date.create(date).relative())
+      })
+      var div_en = document.getElementById("en");
+      var div_cy = document.getElementById("cy");
+      window.onhashchange = function () {
+          div_en.style.display = "none";
+          div_cy.style.display = "none";
+          document.getElementById(location.hash.replace(/#/, '')).style.display = "block";
+      };
+
+      if (location.hash) {
+          window.onhashchange();
+      } else {
+          div_cy.style.display = "none";
+      }
+  %strong
+    %a{:href=>"/blog"} <- Previous Blogposts
+

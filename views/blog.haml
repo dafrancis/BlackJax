@@ -1,0 +1,16 @@
+%header 
+  %h1 Blog
+%ul#articles
+  -@articles.each do |article|
+    %li{:class => article['blog']}
+      %a.article{:href=>"#{article['site']}/#{article['slug']}", :title => article["summary"]}= article["title"]
+      (
+      %span.date #{article["date"]}
+      )
+%script
+  :plain
+    $(".date").each(function () {
+        var date = $(this).html();
+        $(this).html(Date.create(date).format('<span class="daybig">{dd}</span> {Mon} {yyyy}'));
+    });
+

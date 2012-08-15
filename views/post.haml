@@ -1,0 +1,13 @@
+%article
+  %header
+    %h1= article.title
+    %time.timeago{:datetime => article.date.xmlschema}= article.date.strftime "%Y/%m/%d"
+  %section.content= markdown article.content
+  %script
+    :plain
+      $(function () {
+        var date = $('time.timeago').html();
+        $('time.timeago').html(Date.create(date).relative())
+      })
+  %strong
+    %a{:href=>"/blog"} <- Previous Blogposts

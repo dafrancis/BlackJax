@@ -5,11 +5,11 @@ class Panel < BlackJax
   
   get '/links' do
     @pages = get_lang.pages(:order =>[:pos.asc])
-    haml :links
+    haml :links, :layout => false
   end
 
   get '/admin' do
     @modules = Dir['./modules/*.rb'].map{|n| n.gsub(%r{(./modules/|.rb)},'')}
-    haml :modules
+    haml :modules, :layout => false
   end
 end
